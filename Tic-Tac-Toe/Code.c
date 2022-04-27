@@ -9,6 +9,7 @@ Team Memebers:- 1.)Deepanshu Pal
 */
 #include<stdio.h>
 #include<string.h>
+//declaration of funtions and variables.  
 char x,o;
 char a[9]={'1','2','3','4','5','6','7','8','9'};
 char u1[50],u2[50];
@@ -16,7 +17,8 @@ void board();
 void rules();
 int checkforwin();
 int main()
-{
+{   //First screen of game from where Player inputs and selection of "X" and "O" to start the game,
+    //P is used as pointer for score.txt which will store the result of game about the winner and Draws in game.
     FILE *p;
     p=fopen("score.txt","a+");
     fclose(p);
@@ -26,11 +28,17 @@ int main()
     char symbol,re;
     char start,dec;
     int s;
+
+    //rule funtion call before the starting of game. 
     rules();
+
+    //Selection Between Start the game or To View Result of Previous Games.
     printf("\n\nType 1 to start the game:-\nType 2 to view Result:-\n");
     scanf("%d",&s);
     if(s==1)
     {
+
+    //Read is considered as loop which is used in various places to send back the compiler to here when it is needed or required.
     read:
         p=fopen("score.txt","a+");
     printf("\nEnter name of player1: ");
@@ -54,7 +62,7 @@ int main()
 
     do
     {
-
+        //Here the board entry loop starts which is will fill the entry in board as per Player response.
         player=((player%2)?1:2);
         if(player==1)
         printf("%s Type any digit from 1-9 to fill your response:- ",u1);
@@ -83,13 +91,17 @@ int main()
         else
             {printf("Wrong Selection\n");player--;}
 
+        //Function call to check for the winner in the Games as per rules. 
         score=checkforwin();
         player++;
         board();
     }while(score == -1);
 
-
+    
     p=fopen("score.txt","a+");
+    /*Loop to print the winner as per rules.
+    It also gives option wether to satrt the game again or to exit from the application.
+    */
     if(score==1)
     {
         int cho;
@@ -114,6 +126,10 @@ int main()
         printf("\n\nEnter to View Result!\n\n");fprintf(p,"\t%s","RESULT");
         getch();
     }
+    /*Call back to Start screen of choice of starting the game or to view result.
+    As per loop new window will appear with results of previous matches which is stored in score.txt. 
+    It also gives choice to user to start the game from that screen onwards.
+    */
     if(s==2)
     {
         int cho;
@@ -143,6 +159,8 @@ int main()
         getch();
     }
 }
+
+//Here all the condition of winning as per rules is checked once the game concluded and Winner/Tie of the round is Announced. 
 int checkforwin()
 {
     if(a[0]==a[1] && a[1]==a[2])
@@ -167,6 +185,7 @@ int checkforwin()
         return -1;
 }
 
+//Here lie the Board Appearance of our game.
 void board()
 {
     int i;
@@ -186,6 +205,10 @@ void board()
         printf("  %c |  %c | %c\n",a[6],a[7],a[8]);
         printf("    |    |    \n");
     }
+
+/*Information About the Team.
+  Games Rules How Game is played and what are condition of winning.
+  */
 void rules()
 {
     printf("\tTic-Tac-Toe\n\n");
@@ -201,6 +224,11 @@ void rules()
     printf("\n2:Player who gets a combination of 3 same characters either diagonal or horizontally or \n  vertically will be declared as the winner");
 
 }
+
+/*Decision making point between player fot "X" and "O".
+  As first person gets to choose between "X" and "O".
+  Second person is assigned the left over option byitself.
+   */
 int decision()
 {
     char dec;
